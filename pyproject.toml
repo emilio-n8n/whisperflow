@@ -1,0 +1,19 @@
+[project]
+name = "whisperflow"
+version = "0.3.0"
+description = "Dictée vocale (Groq Whisper) pour Omarchy / Hyprland"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+whisperflow = "whisperflow.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["whisperflow"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

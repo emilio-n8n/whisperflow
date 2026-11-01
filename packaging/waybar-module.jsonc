@@ -1,0 +1,14 @@
+// Ajoute "custom/whisperflow" dans modules-right de ~/.config/waybar/config.jsonc,
+// puis colle ce bloc dans le même fichier :
+"custom/whisperflow": {
+  "exec": "whisperflow waybar",
+  "return-type": "json",
+  "interval": "once",
+  "signal": 8,
+  "on-click": "whisperflow toggle",
+  "on-click-right": "whisperflow cancel"
+}
+// Style (~/.config/waybar/style.css) :
+// #custom-whisperflow.recording { color: #ff5555; }
+// #custom-whisperflow.transcribing, #custom-whisperflow.inserting { color: #f1fa8c; }
+// #custom-whisperflow.error { color: #ff79c6; }

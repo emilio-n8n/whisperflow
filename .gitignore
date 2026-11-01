@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+venv/
+*.log
+
+# Secrets et config locale (jamais versionnés)
+secrets.env
+.env
+/config.toml
+*.wav
+
+# Outils
+.openchamber/
+.DS_Store

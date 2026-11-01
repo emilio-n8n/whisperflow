@@ -1,0 +1,49 @@
+# ~/.config/whisperflow/config.toml — toutes les clés sont facultatives.
+[stt]
+model = "whisper-large-v3-turbo"
+language = "fr"                    # "" = détection automatique
+prompt = "WhisperFlow, Hyprland, Omarchy, OpenCode, Gemini"
+
+[audio]
+max_seconds = 300
+silence_rms = 120
+
+[inject]
+method = "auto"                    # auto | wtype | clipboard | none
+paste_shortcut = "ctrl+v"
+trailing_space = true
+
+[jev]                              # niveau 2 : commandes floues (clé OPENCODE_API_KEY)
+enabled = true
+model = "jev-1.13-free"            # "jev-1.13" si le modèle payant est activé
+min_confidence = 0.6               # en dessous, rien n'est exécuté
+
+[actions]
+search_dirs = ["~/Documents", "~/Bureau", "~/Téléchargements", "~/Projets"]
+search_engine = "https://duckduckgo.com/?q="
+
+[actions.apps]                     # seules ces applis peuvent être ouvertes à la voix
+navigateur = ["chromium"]          # Omarchy : Chromium par défaut
+chromium = ["chromium"]
+firefox = ["firefox"]
+terminal = ["xdg-terminal-exec"]
+fichiers = ["nautilus"]
+"éditeur" = ["gnome-text-editor"]
+
+[agent]                            # OpenCode via ACP
+command = ["opencode", "acp"]
+default_cwd = "~/Projets"
+permission_timeout_s = 120
+auto_allow_kinds = ["read", "search", "think", "fetch"]   # le reste demande ton accord
+
+[live]                             # niveau 3 : Gemini Live (clé GEMINI_API_KEY)
+model = "gemini-3.8-live"
+voice = "Aoede"
+send_screen = true                 # envoie l'écran pendant la conversation
+screen_interval_s = 1.5            # ≥ 1 s (le modèle lit au plus 1 image/s)
+computer_use = false               # true = Gemini peut cliquer/taper (avec garde-fous)
+max_session_min = 15
+
+[remote]                           # accès iPhone : whisperflow remote
+port = 8765                        # écoute 127.0.0.1 seulement
+token_ttl_min = 120                # le lien expire et le serveur s'arrêtent seuls
