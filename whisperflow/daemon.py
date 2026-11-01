@@ -110,6 +110,8 @@ class Dictation:
         text, err = "", ""
         try:
             raw = self.stt.transcribe(recording.path)
+            log.info("transcription brute : %d caractères, %d retour(s) à la ligne",
+                     len(raw), raw.count("\n"))
             text = clean(raw, self.cfg.inject.trailing_space, self.cfg.inject.newlines)
         except STTError as e:
             err = str(e)
