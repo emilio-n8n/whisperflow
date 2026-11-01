@@ -165,9 +165,18 @@ def test_local_and_remote_sessions_are_exclusive(tmp_path):
     assert not refused.ok and "local" in refused.message
 
     b.live = None
-    b.remote = SimpleNamespace(active=True, info=lambda: {"active": True})
+    calls = []
+    b.remote = SimpleNamespace(active=True, info=lambda: {"active": True, "connected": True},
+                               stop=lambda reason: calls.append(reason))
     refused = b.live_ctl("start")
-    assert not refused.ok and "distant" in refused.message
+    assert not refused.ok and "téléphone" in refused.message and not calls
+
+    # lien ouvert mais personne au bout : Gemini Live local ferme le lien et démarre
+    b.remote = SimpleNamespace(active=True, info=lambda: {"active": True, "connected": False},
+                               stop=lambda reason: calls.append(reason))
+    started = b.live_ctl("start")
+    assert calls == ["Gemini Live local"]
+    assert not started.ok and "GEMINI_API_KEY" in started.message  # pas de clé dans ce test
 
 
 def test_tunnel_url_parsing(tmp_path, monkeypatch):
