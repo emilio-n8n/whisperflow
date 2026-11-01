@@ -90,7 +90,10 @@ class Brain:
             if active:
                 return Result(True, "Gemini Live déjà actif")
             if self.remote and self.remote.active:
-                return Result(False, "Accès distant actif : arrête-le d'abord (whisperflow remote stop)")
+                if self.remote.info().get("connected"):
+                    return Result(False, "Le téléphone est connecté : coupe la session distante avant Gemini Live.")
+                # Personne au bout du lien : on le ferme pour laisser la place au Live local.
+                self.remote.stop("Gemini Live local")
             try:
                 key = self._secret("GEMINI_API_KEY")
             except SecretError as e:
@@ -153,6 +156,9 @@ class Brain:
     def _remote_live(self, key: str, hooks):
         """Session Gemini dont le micro/haut-parleur sont ceux du téléphone."""
         from .live import LiveSession, LiveTools
+
+        if self.live and self.live.active:
+            raise RuntimeError("Gemini Live est déjà actif sur le PC : arrête-le d'abord.")
 
         def tools_factory(session):
             return LiveTools(self.cfg.live, self.screen, self.run_command, self.annotator, self.agents,

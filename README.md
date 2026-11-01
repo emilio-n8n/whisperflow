@@ -23,6 +23,9 @@ whisperflow doctor
 | SUPER+CTRL+G | 3 Gemini Live | Conversation vocale ; Gemini voit l'écran et agit via les outils de WhisperFlow |
 | SUPER+CTRL+X | — | Annule l'enregistrement en cours |
 | SUPER+CTRL+Échap | — | Arrêt d'urgence : Gemini, agents, minuteurs |
+| SUPER+ALT+R | — | Démarre/arrête le lien iPhone (URL en notification) |
+
+`SUPER+CTRL+D` et `E` reprennent les raccourcis Display et Emojis d'Omarchy (désactivés par `hl.unbind`).
 
 ### Niveau 2 : commandes et agents
 - Ordre : raccourcis appris → règles locales (instantanées, sans IA) → Jev 1.13 via OpenCode Zen (si clé OpenCode).
