@@ -110,7 +110,7 @@ class Dictation:
         text, err = "", ""
         try:
             raw = self.stt.transcribe(recording.path)
-            text = clean(raw, self.cfg.inject.trailing_space)
+            text = clean(raw, self.cfg.inject.trailing_space, self.cfg.inject.newlines)
         except STTError as e:
             err = str(e)
         finally:
@@ -127,6 +127,8 @@ class Dictation:
                 self.state = "idle"
                 self.ui.set("idle", "Rien de compris")
                 return
+            log.info("texte prêt : %d caractères, %d retour(s) à la ligne",
+                     len(text), text.count("\n"))
             if mode == "command":
                 self.state = "acting"
                 self.ui.set("inserting", text.strip())

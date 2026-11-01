@@ -56,6 +56,9 @@ class InjectConfig:
     restore_clipboard: bool = True
     paste_shortcut: str = "ctrl+v"   # terminaux : "ctrl+shift+v"
     trailing_space: bool = True
+    # False (défaut) : les retours à la ligne sont aplatis en espaces. Une dictée
+    # ne doit jamais presser Entrée, sinon un champ de chat envoie le message.
+    newlines: bool = False
 
 
 @dataclass

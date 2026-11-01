@@ -36,6 +36,8 @@ whisperflow doctor
 
 Tester sans micro : `whisperflow route "bureau 2"` (sans exécuter) ou `whisperflow run "bureau 2"`.
 
+La dictée ne presse jamais Entrée : les retours à la ligne sont aplatis en espaces pour ne pas envoyer un message dans un champ de chat. Pour les garder : `newlines = true` dans `[inject]`.
+
 ### Niveau 3 : Gemini Live
 - Outils exposés à Gemini : `run_command` (catalogue), `look_at_screen`, `find_on_screen`, `show_me` (cadre sans clic), `delegate_code`, `agent_status`.
 - Le computer use (`click_text`, `type_text`, `press_keys`, `scroll`) est **désactivé par défaut**. Pour l'activer : `computer_use = true` dans `[live]`.
@@ -56,7 +58,7 @@ Tester sans micro : `whisperflow route "bureau 2"` (sans exécuter) ou `whisperf
 
 ## Développement
 ```bash
-python -m pytest -q          # 95 tests hors ligne (aucun micro, aucun réseau)
+python -m pytest -q          # 99 tests hors ligne (aucun micro, aucun réseau)
 ```
 
 ## Commandes utiles

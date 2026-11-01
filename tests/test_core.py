@@ -75,11 +75,17 @@ def test_build_commands(tmp_path):
     ("  Bonjour à tous.  ", "Bonjour à tous. "),
     ("Sous-titres réalisés par la communauté d'Amara.org", ""),
     ("Merci d'avoir regardé !", ""),
-    ("Première ligne. À la ligne deuxième ligne.", "Première ligne.\ndeuxième ligne. "),
+    ("Première ligne. À la ligne deuxième ligne.", "Première ligne. deuxième ligne. "),
+    ("Une phrase.\nDeuxième phrase.", "Une phrase. Deuxième phrase. "),
     ("", ""),
 ])
 def test_clean(raw, expected):
     assert textproc.clean(raw) == expected
+
+
+def test_clean_can_keep_newlines_when_asked():
+    assert textproc.clean("Première ligne. À la ligne deuxième ligne.", True, True) == \
+        "Première ligne.\ndeuxième ligne. "
 
 
 def test_clean_keeps_real_merci():
@@ -165,6 +171,18 @@ def test_inject_wtype_handles_dash_and_accents():
     r = FakeRun()
     m = inject.WaylandInjector(config.InjectConfig(), r, which_all).insert("-é à ç")
     assert m == "wtype" and r.calls == [["wtype", "-"]] and r.inputs == ["-é à ç".encode()]
+
+
+def test_inject_never_presses_enter():
+    r = FakeRun()
+    m = inject.WaylandInjector(config.InjectConfig(), r, which_all).insert("a\nb")
+    assert m == "wtype" and r.inputs == [b"a b"]
+
+
+def test_inject_can_keep_newlines_when_asked():
+    r = FakeRun()
+    inject.WaylandInjector(config.InjectConfig(newlines=True), r, which_all).insert("a\nb")
+    assert r.inputs == [b"a\nb"]
 
 
 def test_inject_fallback_restores_clipboard():

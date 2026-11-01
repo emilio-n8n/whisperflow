@@ -25,12 +25,16 @@ def is_hallucination(text: str) -> bool:
     return bool(_HALL_RE.match(text.strip()))
 
 
-def clean(text: str, trailing_space: bool = True) -> str:
+def clean(text: str, trailing_space: bool = True, newlines: bool = False) -> str:
+    """Nettoie la transcription. Par défaut aucun retour à la ligne : wtype les
+    taperait comme Entrée, ce qui envoie le message dans un champ de chat."""
     t = text.strip()
     if not t or is_hallucination(t):
         return ""
     for rx, rep in SPOKEN:
-        t = rx.sub(rep, t)
+        t = rx.sub(rep if newlines else " ", t)
+    if not newlines:
+        t = re.sub(r"\s*[\r\n]+\s*", " ", t)
     t = re.sub(r"[ \t]+", " ", t)
     t = re.sub(r" *\n *", "\n", t)
     t = t.strip(" ")

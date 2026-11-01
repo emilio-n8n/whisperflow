@@ -12,6 +12,7 @@ silence_rms = 120
 method = "auto"                    # auto | wtype | clipboard | none
 paste_shortcut = "ctrl+v"
 trailing_space = true
+newlines = false                   # true = garder les retours à la ligne (Enter) dictés
 
 [jev]                              # niveau 2 : commandes floues (clé OPENCODE_API_KEY)
 enabled = true

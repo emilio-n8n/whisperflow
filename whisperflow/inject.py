@@ -7,6 +7,7 @@ En cas d'échec, l'appelant garde le texte dans l'historique : jamais de double 
 """
 from __future__ import annotations
 
+import re
 import shutil
 import subprocess
 import time
@@ -68,6 +69,9 @@ class WaylandInjector:
             self._run(["wl-copy"], input_=old)
 
     def insert(self, text: str) -> str:
+        if not self.cfg.newlines:
+            # wtype taperait chaque \n comme Entrée : dans un chat, ça envoie.
+            text = re.sub(r"\s*[\r\n]+\s*", " ", text)
         m = self.cfg.method
         if m == "none":
             return "none"

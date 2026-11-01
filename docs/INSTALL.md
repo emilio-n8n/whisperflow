@@ -10,6 +10,7 @@ Après une modification : `systemctl --user restart whisperflow`.
 
 ## Problèmes fréquents
 - **Le texte ne s'insère pas dans un terminal** : dans `config.toml`, mets `[inject] method = "clipboard"` et `paste_shortcut = "ctrl+shift+v"`.
+- **Un message part tout seul dans un chat** : vérifie `newlines = false` dans `[inject]` (défaut). WhisperFlow aplatit les retours à la ligne pour ne jamais taper Entrée ; `true` réactive les sauts de ligne dictés.
 - **Raccourci sans effet** : `hyprctl binds | grep whisperflow`. Si SUPER+CTRL+D/E/G est déjà pris par Omarchy, change la touche dans `~/.config/hypr/whisperflow.conf`.
 - **« Rien entendu »** : choisis le bon micro (`wpctl status`, puis `wpctl set-default <id>`) ou baisse `silence_rms`.
 - **Notifications Oui/Non absentes** : il faut mako (Omarchy l'a par défaut). Sans réponse, c'est toujours « non ».
